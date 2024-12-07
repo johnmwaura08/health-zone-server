@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CategoryType {
+  Cardio
+  LegDay
+  PushDay
+  PullDay
+  Abs
+}
+
+model Workout {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reps              Int
+  sets              Int
+  comments          String?
+  weightInLbs       Int?
+  description       String?
+  category          WorkoutCategory @relation(fields: [workoutCategoryId], references: [id])
+  user              User            @relation(fields: [userId], references: [id])
+  userId            String
+  workoutCategoryId String
+}
+
+model Step {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  count     Int
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Weight {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  weightInLbs Int
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+}
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email          String    @unique
+  name           String?
+  hashedPassword String?
+  workouts       Workout[]
+  steps          Step[]
+  weights        Weight[]
+
+  RefreshToken    RefreshToken[]
+  WorkoutCategory WorkoutCategory[]
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userAgent String
+  ipAddress String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model WorkoutCategory {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  type     CategoryType
+  workouts Workout[]
+  userId   String
+  user     User         @relation(fields: [userId], references: [id])
+}

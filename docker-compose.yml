@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  health-zone-db:
+    image: postgres:13
+    restart: always
+    ports:
+      - 5497:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: health-zone
