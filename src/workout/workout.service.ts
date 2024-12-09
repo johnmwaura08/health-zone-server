@@ -34,6 +34,13 @@ export class WorkoutService {
         comments: true,
         createdAt: true,
         updatedAt: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+          },
+        },
       },
     });
   }
