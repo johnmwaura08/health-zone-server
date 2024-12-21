@@ -8,11 +8,12 @@ export class WorkoutService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(request: CreateWorkoutDto, userId: string) {
+    // const weightInLbs = request.weight ?parseInt(request.weight)
     return await this.prismaService.workout.create({
       data: {
-        weightInLbs: request.weight,
-        reps: request.reps,
-        sets: request.sets,
+        weightInLbs: Number(request.weight) || 0,
+        reps: Number(request.reps) || 0,
+        sets: Number(request.sets) || 0,
         workoutCategoryId: request.workoutCategoryId,
         comments: request.comments,
         userId: userId,
