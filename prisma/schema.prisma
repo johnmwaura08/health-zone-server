@@ -19,6 +19,7 @@ enum CategoryType {
   PushDay
   PullDay
   Abs
+ShouldersAndArms
 }
 
 model Workout {
