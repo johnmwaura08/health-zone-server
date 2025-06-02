@@ -43,6 +43,9 @@ export class WorkoutService {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
