@@ -13,12 +13,14 @@ import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { HealthZoneUtils } from 'src/utils/health-zone-utils';
+import { Public } from 'src/auth/skipAuth';
 
 @Controller('workout')
 @ApiTags('workout')
 export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
 
+  @Public()
   @Post()
   create(@Request() request, @Body() createWorkoutDto: CreateWorkoutDto) {
     const userId = HealthZoneUtils.getUserIdFromAccessToken(request);
@@ -26,6 +28,7 @@ export class WorkoutController {
     return this.workoutService.create(createWorkoutDto, userId);
   }
 
+  @Public()
   @Get()
   async findAll(@Request() request) {
     const userId = HealthZoneUtils.getUserIdFromAccessToken(request);

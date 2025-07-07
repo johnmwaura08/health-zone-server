@@ -13,6 +13,7 @@ import { CreateWorkoutCategoryDto } from './dto/create-workout-category.dto';
 import { UpdateWorkoutCategoryDto } from './dto/update-workout-category.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { HealthZoneUtils } from 'src/utils/health-zone-utils';
+import { Public } from 'src/auth/skipAuth';
 
 @Controller('workout-category')
 @ApiTags('workout-category')
@@ -21,6 +22,7 @@ export class WorkoutCategoryController {
     private readonly workoutCategoryService: WorkoutCategoryService,
   ) {}
 
+  @Public()
   @Post()
   async create(
     @Request() request,
@@ -35,6 +37,7 @@ export class WorkoutCategoryController {
     );
   }
 
+  @Public()
   @Get()
   async findAll(@Request() request) {
     const userId = HealthZoneUtils.getUserIdFromAccessToken(request);
