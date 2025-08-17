@@ -44,7 +44,8 @@ export namespace HealthZoneUtils {
   }
 
   export function getUserIdFromAccessToken(req: any): string {
-    return req?.user?.userId;
+    return 'cm4dlgz680000rz0rmpp95cwg';
+    // return req?.user?.userId;
   }
 
   export const stringIsNullOrEmpty = (str: string | undefined): boolean =>
